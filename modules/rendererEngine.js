@@ -8,17 +8,9 @@ export default class RendererEngine {
         this.ctx = this.canvas.getContext('2d')
     }
 
-    get getWidth() {
-        return window.innerWidth
-    }
-
-    get getHeight() {
-        return window.innerHeight
-    }
-
-    init() {
-        this.width = 320 // this.getWidth
-        this.height = 200 // this.getHeight
+    init(width, height) {
+        this.width = width
+        this.height = height
         this.canvas.width = this.width
         this.canvas.height = this.height
         this.ctx.clearRect(0, 0, this.width, this.height)
@@ -34,37 +26,23 @@ export default class RendererEngine {
         const x0 = -1
         const x1 = 1
         const xStep = (x1 - x0) / (width - 1)
-        const y0 = -1 /  aspectRatio
-        const y1 = 1 /  aspectRatio
+        const y0 = -1 / aspectRatio
+        const y1 = 1 / aspectRatio
         const yStep = (y1 - y0) / (height - 1)
         const camera = scene.camera
 
         for(let j = 0; j < height; j++) {
-            // const y = y0 + j * yStep
-            const y = j
+            const y = y0 + j * yStep
             for(let i = 0; i < width; i++) {
-                // const x = x0 + i * xStep
-                const x = i
-
-                const rayDirection = new Point(x, y, 0)
-                const ray = new Ray(camera, camera.subtract(rayDirection))
-
-                const colors = this.rayTrace(ray, scene)
-
-                // Generate a xor pattern with some random noise
-                // const offset = Math.floor(0.5 / 10)
-                // var red = ((x+offset) % 256) ^ ((y+offset) % 256);
-                // var green = ((2*x+offset) % 256) ^ ((2*y+offset) % 256);
-                // var blue = 50 + Math.floor(Math.random()*100);
-                // // Rotate the colors
-                // blue = (blue + offset) % 256;
-
+                const x = x0 + i * xStep
+                const ray = new Ray(camera, new Point(x, y, 0).subtract(camera))
+                const color = this.rayTrace(ray, scene)
                 // Set the pixel data
-                const pixelindex = (y * width + x) * 4;
-                this.imagedata.data[pixelindex] = colors.red;     // Red
-                this.imagedata.data[pixelindex+1] = colors.green; // Green
-                this.imagedata.data[pixelindex+2] = colors.blue;  // Blue
-                this.imagedata.data[pixelindex+3] = 255;   // Alpha
+                const pixelindex = (j * width + i) * 4
+                this.imagedata.data[pixelindex] = color.red
+                this.imagedata.data[pixelindex + 1] = color.green
+                this.imagedata.data[pixelindex + 2] = color.blue
+                this.imagedata.data[pixelindex + 3] = 255
             }
         }
         this.ctx.putImageData(this.imagedata, 0, 0)
@@ -76,8 +54,8 @@ export default class RendererEngine {
         if(objectHit === null) {
             return color
         }
-        const hitPosition = ray.origin + ray.direction * distanceHit
-        color += this.colorAt(objectHit)
+        const hitPosition = ray.origin.add(ray.direction.multiply(distanceHit))
+        color = this.colorAt(objectHit)
         return color
     }
 

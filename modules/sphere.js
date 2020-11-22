@@ -13,8 +13,6 @@ export default class Sphere {
         const discriminant = b * b - 4 * c
         if(discriminant >= 0) {
             const distance = (-b - Math.sqrt(discriminant)) / 2
-            // TO DO
-            console.log(distance);
             return distance > 0 ? distance : null
         } else {
             return null

@@ -1,8 +1,8 @@
 export default class Scene {
-    constructor(camera, objects) {
+    constructor(camera, objects, width, height) {
         this.camera = camera
         this.objects = objects
-        this.width = 320
-        this.height = 200
+        this.width = width
+        this.height = height
     }
 }
