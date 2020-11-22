@@ -55,7 +55,9 @@ export default class RendererEngine {
             return color
         }
         const hitPosition = ray.origin.add(ray.direction.multiply(distanceHit))
-        color = this.colorAt(objectHit)
+        const hitNormal = objectHit.normal(hitPosition)
+        //color = this.colorAt(objectHit, hitPosition, hitNormal, scene)
+        color.add(this.colorAt(objectHit, hitPosition, hitNormal, scene))
         return color
     }
 
@@ -72,7 +74,20 @@ export default class RendererEngine {
         return [distanceMin, objectHit]
     }
 
-    colorAt(objectHit) {
-        return objectHit.material
+    colorAt(objectHit, hitPosition, hitNormal, scene) {
+        const material = objectHit.material
+        const objectColor = material.colorAt(hitPosition)
+        const toCam = scene.camera.subtract(hitPosition)
+        const specularK = 50
+        let color = new Color(0, 0, 0).multiply(material.ambient)
+        for(const light of scene.lights) {
+            const toLight = new Ray(hitPosition, light.position.subtract(hitPosition))
+            // diffuse shading
+            color = objectColor.multiply(material.diffuse * Math.max(hitNormal.dotProduct(toLight.direction), 0))
+            // specular shading
+            // const halfVector = toLight.direction.add(toCam).normalize
+            // color.add(light.color.multiply(material.specular * Math.max(hitNormal.dotProduct(halfVector), 0)))
+        }
+        return color
     }
 }

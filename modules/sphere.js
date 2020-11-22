@@ -19,4 +19,8 @@ export default class Sphere {
         }
     }
 
+    normal(surfacePoint) {
+        return surfacePoint.subtract(this.center).normalize
+    }
+
 }
