@@ -1,29 +1,16 @@
-const canvas = document.getElementById('canvas')
-const ctx = canvas.getContext('2d')
+import Vector from './modules/vector.js'
+import Canvas from './modules/canvas.js'
 
-const getWidth = () => window.innerWidth
-const getHeight = () => window.innerHeight
-
-const setCanvasDimensions = () => {
-    canvas.width = getWidth()
-    canvas.height = getHeight()
-}
-
-const init = () => {
-    setCanvasDimensions()
-    ctx.clearRect(0, 0, getWidth(), getHeight())
-    ctx.fillStyle = '#000000'
-    ctx.fillRect(0, 0, getWidth(), getHeight())
-}
+const canvas = new Canvas()
 
 const render = () => {
-    window.requestAnimationFrame(render)
+    // window.requestAnimationFrame(render)
 }
 
 window.addEventListener('resize', () => {
-    init()
+    canvas.init()
     render()
 })
 
-init()
+canvas.init()
 render()
