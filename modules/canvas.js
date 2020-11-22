@@ -13,10 +13,12 @@ export default class Canvas {
     }
 
     init() {
-        this.canvas.width = this.getWidth
-        this.canvas.height = this.getHeight
-        this.ctx.clearRect(0, 0, this.getWidth, this.getHeight)
+        this.width = 320 // this.getWidth
+        this.height = 200 // this.getHeight
+        this.canvas.width = this.width
+        this.canvas.height = this.height
+        this.ctx.clearRect(0, 0, this.width, this.height)
         this.ctx.fillStyle = '#000000'
-        this.ctx.fillRect(0, 0, this.getWidth, this.getHeight)
+        this.ctx.fillRect(0, 0, this.width, this.height)
     }
 }
