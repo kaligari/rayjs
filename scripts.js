@@ -27,31 +27,14 @@ const objects = [
     )
 ]
 const lights = [
-    new Light(new Point(1.5, -0.5, -10), new Color(255, 255, 255))
+    new Light(new Point(1.5, -0.5, -2), new Color(255, 255, 255))
 ]
 const scene = new Scene(camera, objects, lights, width, height)
 const engine = new RendererEngine(scene)
 
-let pos = 0
-let direction = true
 const render = () => {
-    if(pos > 30) {
-        direction = false
-    }
-    if(pos < 1) {
-        direction = true
-    }
-
-    if(direction) {
-        pos++
-    } else {
-        pos--
-    }
-
-    // objects[1].center = new Point((pos / 100) -.25, 0, -.25)
-    lights[0].position = new Point(1.5, -.5, -pos / 10)
     engine.render(scene)
-    window.requestAnimationFrame(render)
+    // window.requestAnimationFrame(render)
 }
 
 window.addEventListener('resize', () => {
