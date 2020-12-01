@@ -85,8 +85,8 @@ export default class RendererEngine {
             // diffuse shading
             color.add(objectColor.multiply(material.diffuse * Math.max(hitNormal.dotProduct(toLight.direction), 0)))
             // specular shading
-            // const halfVector = toLight.direction.add(toCam).normalize
-            // color.add(light.color.multiply(material.specular * Math.max(hitNormal.dotProduct(halfVector), 0)))
+            const halfVector = toLight.direction.add(toCam).normalize
+            color.add(light.color.multiply(material.specular).multiply(Math.max(hitNormal.dotProduct(halfVector), 0) ** specularK))
         }
         return color
     }
