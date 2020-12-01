@@ -66,7 +66,7 @@ export default class RendererEngine {
         let objectHit = null
         for(const obj of scene.objects) {
             const dist = obj.intersects(ray)
-            if(dist !== null) {
+            if(dist !== null && (objectHit === null || dist < distanceMin)) {
                 distanceMin = dist
                 objectHit = obj
             }
@@ -83,7 +83,7 @@ export default class RendererEngine {
         for(const light of scene.lights) {
             const toLight = new Ray(hitPosition, light.position.subtract(hitPosition))
             // diffuse shading
-            color = objectColor.multiply(material.diffuse * Math.max(hitNormal.dotProduct(toLight.direction), 0))
+            color.add(objectColor.multiply(material.diffuse * Math.max(hitNormal.dotProduct(toLight.direction), 0)))
             // specular shading
             // const halfVector = toLight.direction.add(toCam).normalize
             // color.add(light.color.multiply(material.specular * Math.max(hitNormal.dotProduct(halfVector), 0)))
