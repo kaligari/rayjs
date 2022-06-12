@@ -11,6 +11,10 @@ export default class RendererEngine {
     width: number
     height: number
     imagedata: ImageData
+    deltaNow: number
+    deltaThen: number
+    delta: number
+    fps: number
 
     constructor() {
         this.canvas = document.getElementById('canvas') as HTMLCanvasElement
@@ -18,6 +22,10 @@ export default class RendererEngine {
         this.width = 320
         this.height = 200
         this.imagedata = this.ctx.createImageData(this.width, this.height)
+        this.deltaNow = 0
+        this.deltaThen = 0
+        this.delta = 0
+        this.fps = 0
     }
 
     init(width: number, height: number) {
@@ -43,6 +51,8 @@ export default class RendererEngine {
         const yStep = (y1 - y0) / (height - 1)
         const camera = scene.camera
 
+        this.setDelta()
+        
         for(let j = 0; j < height; j++) {
             const y = y0 + j * yStep
             for(let i = 0; i < width; i++) {
@@ -58,6 +68,8 @@ export default class RendererEngine {
             }
         }
         this.ctx.putImageData(this.imagedata, 0, 0)
+        this.ctx.fillStyle = "red";
+        this.ctx.fillText(`${this.fps} fps`, 10, 10)
     }
 
     rayTrace(ray: Ray, scene: Scene) {
@@ -101,5 +113,12 @@ export default class RendererEngine {
             color.add(light.color.multiply(material.specular).multiply(Math.max(hitNormal.dotProduct(halfVector), 0) ** specularK))
         }
         return color
+    }
+
+    setDelta() {
+        this.deltaNow = Date.now()
+        this.delta = (this.deltaNow - this.deltaThen) / 1000
+        this.deltaThen = this.deltaNow
+        this.fps = Math.floor(1 / this.delta)
     }
 }
