@@ -10,13 +10,14 @@ export default class RendererEngine {
     ctx: CanvasRenderingContext2D
     width: number
     height: number
-    imagedata: ImageData | undefined
+    imagedata: ImageData
 
     constructor() {
         this.canvas = document.getElementById('canvas') as HTMLCanvasElement
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D
         this.width = 320
         this.height = 200
+        this.imagedata = this.ctx.createImageData(this.width, this.height)
     }
 
     init(width: number, height: number) {
@@ -41,10 +42,6 @@ export default class RendererEngine {
         const y1 = 1 / aspectRatio
         const yStep = (y1 - y0) / (height - 1)
         const camera = scene.camera
-
-        if(!this.imagedata) {
-            throw new Error('Imagedata is undefined')
-        }
 
         for(let j = 0; j < height; j++) {
             const y = y0 + j * yStep

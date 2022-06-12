@@ -7,23 +7,31 @@ import Color from './modules/color'
 import RendererEngine from './modules/rendererEngine'
 import Light from './modules/light'
 import Material from './modules/material'
+import Animations from './modules/animations'
 
-const width = 640
-const height = 480
+const width = 320
+const height = 240
+// const width = 640
+// const height = 480
 
 const getWidth = () => window.innerWidth
 const getHeight = () => window.innerHeight
 
-const camera = new Vector(0, 0, -1)
+const camera = new Vector(0, 0, -2)
 const objects = [
     new Sphere(new Point(0, 0, 0), 0.5,
         new Material(
             new Color(255, 0, 0)
         )
     ),
-    new Sphere(new Point(.25, 0, -.25), 0.25,
+    new Sphere(new Point(0, 0, 0), 0.05,
         new Material(
             new Color(0, 0, 255)
+        )
+    ),
+    new Sphere(new Point(0, 0, 0), 0.05,
+        new Material(
+            new Color(0, 255, 0)
         )
     )
 ]
@@ -32,10 +40,14 @@ const lights = [
 ]
 const scene = new Scene(camera, objects, lights, width, height)
 const engine = new RendererEngine()
+const animation1 = new Animations(objects[1], 180, .65, .2)
+const animation2 = new Animations(objects[2], 0, .8, .1)
 
 const render = () => {
     engine.render(scene)
-    // window.requestAnimationFrame(render)
+    animation1.animate()
+    animation2.animate()
+    window.requestAnimationFrame(render)
 }
 
 const init = () => {
