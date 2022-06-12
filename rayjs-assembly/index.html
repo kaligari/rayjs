@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="module">
+import { render, width, height, engine } from './build/release.js'
+
+const canvas = document.getElementById('canvas')
+const ctx = canvas.getContext('2d')
+const imageData = ctx.createImageData(width, height)
+
+canvas.width = width
+canvas.height = height
+
+const renderFrame = () => {
+    window.requestAnimationFrame(renderFrame)
+    render()
+    new Uint32Array(imageData.data.buffer).set(new Uint32Array(engine.imageBuffer.buffer))
+    ctx.putImageData(imageData, 0, 0);
+    ctx.fillStyle = "red";
+    ctx.fillText(`${engine.fps} fps`, 10, 20)
+}
+
+window.addEventListener('resize', () => renderFrame())
+
+renderFrame()
+</script>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+<!-- <script>
+    WebAssembly.instantiateStreaming(fetch("build/optimized.wasm"), { Math })
+.then(module => {
+  const exports = module.instance.exports;
+  var canvas = document.getElementById("canvas");
+  var context = canvas.getContext("2d");
+
+  var width, height, image;
+  function onresize() {
+    width = canvas.offsetWidth >>> 2;
+    height = canvas.offsetHeight >>> 2;
+    canvas.width = width;
+    canvas.height = height;
+    image = context.createImageData(width, height);
+    exports.resize(width, height);
+  }
+  onresize();
+  window.addEventListener("resize", onresize);
+
+  var tick = 0.0;
+  (function update() {
+    requestAnimationFrame(update);
+    exports.update(tick += step);
+    new Uint32Array(image.data.buffer).set(new Uint32Array(exports.memory.buffer, exports.offset, width * height));
+    context.putImageData(image, 0, 0);
+  })();
+});
+</script> -->
+</html>
