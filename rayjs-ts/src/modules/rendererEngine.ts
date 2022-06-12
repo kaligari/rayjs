@@ -6,37 +6,22 @@ import Sphere from './sphere.js'
 import Vector from './vector.js'
 
 export default class RendererEngine {
-    canvas: HTMLCanvasElement
-    ctx: CanvasRenderingContext2D
     width: number
     height: number
-    imagedata: ImageData
     deltaNow: number
     deltaThen: number
     delta: number
     fps: number
+    imageBuffer: Uint32Array
 
-    constructor() {
-        this.canvas = document.getElementById('canvas') as HTMLCanvasElement
-        this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D
-        this.width = 320
-        this.height = 200
-        this.imagedata = this.ctx.createImageData(this.width, this.height)
+    constructor(width: number, height: number) {
+        this.width = width
+        this.height = height
         this.deltaNow = 0
         this.deltaThen = 0
         this.delta = 0
         this.fps = 0
-    }
-
-    init(width: number, height: number) {
-        this.width = width
-        this.height = height
-        this.canvas.width = this.width
-        this.canvas.height = this.height
-        this.ctx.clearRect(0, 0, this.width, this.height)
-        this.ctx.fillStyle = '#000000'
-        this.ctx.fillRect(0, 0, this.width, this.height)
-        this.imagedata = this.ctx.createImageData(this.width, this.height)
+        this.imageBuffer = new Uint32Array(this.width * this.height)
     }
 
     render(scene: Scene) {
@@ -60,16 +45,13 @@ export default class RendererEngine {
                 const ray = new Ray(camera, new Point(x, y, 0).subtract(camera))
                 const color = this.rayTrace(ray, scene)
                 // Set the pixel data
-                const pixelindex = (j * width + i) * 4
-                this.imagedata.data[pixelindex] = color.red
-                this.imagedata.data[pixelindex + 1] = color.green
-                this.imagedata.data[pixelindex + 2] = color.blue
-                this.imagedata.data[pixelindex + 3] = 255
+                const pixelindex = (j * width + i)
+                this.imageBuffer[pixelindex] = color.red |
+                (color.green << 8) |  
+                (color.blue << 16) |
+                (255 << 24);
             }
         }
-        this.ctx.putImageData(this.imagedata, 0, 0)
-        this.ctx.fillStyle = "red";
-        this.ctx.fillText(`${this.fps} fps`, 10, 10)
     }
 
     rayTrace(ray: Ray, scene: Scene) {
