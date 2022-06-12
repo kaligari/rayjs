@@ -85,8 +85,8 @@ export default class RendererEngine {
     }
 
     findNearest(ray: Ray, scene: Scene) {
-        let distanceHit = null
-        let objectHit = null
+        let distanceHit: number | null = null
+        let objectHit: Sphere | null = null
         for(const obj of scene.objects) {
             const dist = obj.intersects(ray)
             if(dist !== null && (objectHit === null || dist < distanceHit! )) {
