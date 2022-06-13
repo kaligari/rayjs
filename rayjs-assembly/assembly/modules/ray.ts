@@ -1,10 +1,11 @@
+import Point from "./point"
 import Vector from "./vector"
 
 export default class Ray {
-    origin: Vector
+    origin: Point
     direction: Vector
     
-    constructor(origin: Vector, direction: Vector) {
+    constructor(origin: Point, direction: Vector) {
         this.origin = origin
         this.direction = direction.normalize
     }

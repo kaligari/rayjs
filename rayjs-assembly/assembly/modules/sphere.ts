@@ -13,14 +13,14 @@ export default class Sphere {
         this.material = material
     }
 
-    intersects(ray: Ray): i64 {
+    intersects(ray: Ray): i32 {
         // return distance to intersection
         const sphereToRay = ray.origin.subtract(this.center)
         const b = 2 * ray.direction.dotProduct(sphereToRay)
         const c = sphereToRay.dotProduct(sphereToRay) - this.radius * this.radius
         const discriminant = b * b - 4 * c
         if(discriminant >= 0) {
-            const distance: i64 = Math.floor((-b - Math.sqrt(discriminant)) / 2) as i64
+            const distance: i32 = ((-b - Math.sqrt(discriminant)) / 2) as i32
             return distance > 0 ? distance : -1
         }
         return -1

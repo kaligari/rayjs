@@ -1,19 +1,19 @@
 export default class Vector {
-    x: number
-    y: number
-    z: number
+    x: f64
+    y: f64
+    z: f64
 
-    constructor(x: number, y: number, z: number) {
+    constructor(x: f64, y: f64, z: f64) {
         this.x = x
         this.y = y
         this.z = z
     }
 
-    dotProduct(vector: Vector): number {
+    dotProduct(vector: Vector): f64 {
         return this.x * vector.x + this.y * vector.y + this.z * vector.z
     }
 
-    get magnitude(): number {
+    get magnitude(): f64 {
         return Math.sqrt(this.dotProduct(this))
     }
 
@@ -29,11 +29,11 @@ export default class Vector {
         return new Vector(this.x - vector.x, this.y - vector.y, this.z - vector.z)
     }
 
-    multiply(value: number): Vector {
+    multiply(value: f64): Vector {
         return new Vector(this.x * value, this.y * value, this.z * value)
     }
 
-    divide(value: number): Vector {
+    divide(value: f64): Vector {
         return new Vector(this.x / value, this.y / value, this.z / value)
     }
 }
