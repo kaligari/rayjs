@@ -1,16 +1,15 @@
 import Color from './color'
 import Material from './material'
-import Point from './point'
 import Ray from './ray'
 import Scene from './scene'
 import Sphere from './sphere'
 import Vector from './vector'
 
 class NearestObject {
-    distanceHit: i32
+    distanceHit: f64
     objectHit: Sphere
 
-    constructor(distanceHit: i32, objectHit: Sphere) {
+    constructor(distanceHit: f64, objectHit: Sphere) {
         this.distanceHit = distanceHit
         this.objectHit = objectHit
     }
@@ -43,10 +42,10 @@ export default class RendererEngine {
             const y: u16 = y0 + j * yStep
             for(let i: u16 = 0; i < width; i++) {
                 const x: u16 = x0 + i * xStep
-                const ray = new Ray(camera, new Point(x, y, 0).subtract(camera))
+                const ray = new Ray(camera, new Vector(x, y, 0).subtract(camera))
                 const color: Color = this.rayTrace(ray, scene)
                 // Set the pixel data
-                const pixelindex: u16 = (j * width + i)
+                const pixelindex: i32 = (j * width + i) as i32
                 this.imageBuffer[pixelindex] = color.red |
                 (color.green << 8) |  
                 (color.blue << 16) |
@@ -58,28 +57,30 @@ export default class RendererEngine {
     rayTrace(ray: Ray, scene: Scene): Color {
         let color: Color = new Color(0, 0, 0)
         const nearestObject: NearestObject = this.findNearest(ray, scene)
-        const distanceHit: i32 = nearestObject.distanceHit
+        const distanceHit: f64 = nearestObject.distanceHit
         const objectHit: Sphere = nearestObject.objectHit
-        if(objectHit === null) {
+        if(distanceHit === -1) {
             return color
         }
         const hitPosition = ray.origin.add(ray.direction.multiply(distanceHit))
         const hitNormal = objectHit.normal(hitPosition)
-        color.add(this.colorAt(objectHit, hitPosition, hitNormal, scene))
+        // color.add(this.colorAt(objectHit, hitPosition, hitNormal, scene))
+        // TODO way to debugg - show red bg
+        color.add(new Color(255, 0, 0))
         return color
     }
 
     findNearest(ray: Ray, scene: Scene): NearestObject {
-        let distanceHit: i32 = -1
-        let objectHit = new Sphere(new Point(0, 0, 0), 0.5,
+        let distanceHit: f64 = -1
+        let objectHit = new Sphere(new Vector(0, 0, 0), 0.5,
             new Material(
                 new Color(255, 0, 0)
             )
         )
         for(let i: i32 = 0; i < scene.objects.length; i++) {
-            const obj = scene.objects[i]
-            const dist = obj.intersects(ray)
-            if(dist !== -1 && dist < distanceHit) {
+            const obj: Sphere = scene.objects[i]
+            const dist: f64 = obj.intersects(ray)
+            if(dist !== -1 && (dist < distanceHit || distanceHit === -1)) {
                 distanceHit = dist
                 objectHit = obj
             }
@@ -87,13 +88,13 @@ export default class RendererEngine {
         return new NearestObject(distanceHit, objectHit)
     }
 
-    colorAt(objectHit: Sphere, hitPosition: Point, hitNormal: Vector, scene: Scene): Color {
+    colorAt(objectHit: Sphere, hitPosition: Vector, hitNormal: Vector, scene: Scene): Color {
         const material = objectHit.material
         // const objectColor = material.colorAt(hitPosition)
-        const objectColor = material.colorAt()
-        const toCam = scene.camera.subtract(hitPosition)
-        const specularK = 100
-        let color = new Color(0, 0, 0).multiply((material.ambient) as u32)
+        const objectColor: Color = material.colorAt()
+        const toCam: Vector = scene.camera.subtract(hitPosition)
+        const specularK: i32 = 100
+        let color: Color = new Color(0, 0, 0).multiply((material.ambient) as u32)
         for(let i: i32 = 0; i < scene.lights.length; i++) {
             const light = scene.lights[i]
             const toLight = new Ray(hitPosition, light.position.subtract(hitPosition))

@@ -3,19 +3,20 @@
  (type $i32_=>_i32 (func (param i32) (result i32)))
  (type $i32_i32_i32_=>_i32 (func (param i32 i32 i32) (result i32)))
  (type $i32_i32_=>_i32 (func (param i32 i32) (result i32)))
- (type $i32_=>_none (func (param i32)))
  (type $i32_f64_=>_none (func (param i32 f64)))
+ (type $i32_=>_none (func (param i32)))
  (type $i32_i32_i32_=>_none (func (param i32 i32 i32)))
  (type $none_=>_none (func))
  (type $i32_i32_i32_i32_=>_i32 (func (param i32 i32 i32 i32) (result i32)))
+ (type $i32_i32_=>_f64 (func (param i32 i32) (result f64)))
  (type $i32_f64_=>_i32 (func (param i32 f64) (result i32)))
- (type $i32_f64_f64_f64_=>_i32 (func (param i32 f64 f64 f64) (result i32)))
  (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
  (type $none_=>_i32 (func (result i32)))
- (type $i32_i32_=>_f64 (func (param i32 i32) (result f64)))
  (type $i32_=>_f64 (func (param i32) (result f64)))
+ (type $i32_f64_f64_f64_=>_i32 (func (param i32 f64 f64 f64) (result i32)))
  (type $i32_i32_f64_i32_=>_i32 (func (param i32 i32 f64 i32) (result i32)))
  (type $i32_i32_f64_f64_f64_=>_i32 (func (param i32 i32 f64 f64 f64) (result i32)))
+ (type $i32_f64_i32_=>_i32 (func (param i32 f64 i32) (result i32)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (global $assembly/index/width i32 (i32.const 255))
  (global $assembly/index/height i32 (i32.const 255))
@@ -41,9 +42,9 @@
  (global $assembly/index/scene (mut i32) (i32.const 0))
  (global $assembly/index/imageBuffer (mut i32) (i32.const 0))
  (global $~lib/rt/__rtti_base i32 (i32.const 768))
- (global $~lib/memory/__data_end i32 (i32.const 908))
- (global $~lib/memory/__stack_pointer (mut i32) (i32.const 17292))
- (global $~lib/memory/__heap_base i32 (i32.const 17292))
+ (global $~lib/memory/__data_end i32 (i32.const 900))
+ (global $~lib/memory/__stack_pointer (mut i32) (i32.const 17284))
+ (global $~lib/memory/__heap_base i32 (i32.const 17284))
  (memory $0 1)
  (data (i32.const 12) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h\00")
  (data (i32.const 60) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s\00\00\00\00\00\00\00")
@@ -58,7 +59,7 @@
  (data (i32.const 524) ",\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\1a\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00.\00t\00s\00\00\00")
  (data (i32.const 572) "|\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00^\00\00\00E\00l\00e\00m\00e\00n\00t\00 \00t\00y\00p\00e\00 \00m\00u\00s\00t\00 \00b\00e\00 \00n\00u\00l\00l\00a\00b\00l\00e\00 \00i\00f\00 \00a\00r\00r\00a\00y\00 \00i\00s\00 \00h\00o\00l\00e\00y\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 700) "<\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00$\00\00\00~\00l\00i\00b\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s\00\00\00\00\00\00\00\00\00")
- (data (i32.const 768) "\11\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\00\00\02\00\00\00 \00\00\00\06\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00\02A\00\00\00\00\00\00\02\t\00\00\00\00\00\00\00\00\00\00\00\00\00\00\02A\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 768) "\10\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\00\00\02\00\00\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00\02A\00\00\00\00\00\00\02\t\00\00\00\00\00\00\00\00\00\00\00\00\00\00\02A\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
  (table $0 1 1 funcref)
  (elem $0 (i32.const 1))
  (export "width" (global $assembly/index/width))
@@ -2506,15 +2507,15 @@
   local.get $0
   i32.load offset=12
  )
- (func $assembly/modules/rendererEngine/NearestObject#set:distanceHit (param $0 i32) (param $1 i32)
+ (func $assembly/modules/rendererEngine/NearestObject#set:distanceHit (param $0 i32) (param $1 f64)
   local.get $0
   local.get $1
-  i32.store
+  f64.store
  )
  (func $assembly/modules/rendererEngine/NearestObject#set:objectHit (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
-  i32.store offset=4
+  i32.store offset=8
   local.get $0
   local.get $1
   i32.const 0
@@ -2554,6 +2555,29 @@
   f64.load offset=16
   f64.add
   call $assembly/modules/vector/Vector#constructor
+ )
+ (func $assembly/modules/color/Color#add (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $0
+  i32.load
+  local.get $1
+  i32.load
+  i32.add
+  call $assembly/modules/color/Color#set:red
+  local.get $0
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  i32.load offset=4
+  i32.add
+  call $assembly/modules/color/Color#set:green
+  local.get $0
+  local.get $0
+  i32.load offset=8
+  local.get $1
+  i32.load offset=8
+  i32.add
+  call $assembly/modules/color/Color#set:blue
  )
  (func $~lib/typedarray/Uint32Array#__set (param $0 i32) (param $1 i32) (param $2 i32)
   local.get $1
@@ -2874,7 +2898,7 @@
  (func $assembly/modules/rendererEngine/NearestObject~visit (param $0 i32) (param $1 i32)
   (local $2 i32)
   local.get $0
-  i32.load offset=4
+  i32.load offset=8
   local.tee $2
   if
    local.get $2
@@ -2895,37 +2919,34 @@
            block $assembly/modules/material/Material
             block $assembly/modules/sphere/Sphere
              block $assembly/modules/vector/Vector
-              block $assembly/modules/point/Point
-               block $~lib/typedarray/Uint32Array
-                block $assembly/modules/rendererEngine/RendererEngine
-                 block $~lib/arraybuffer/ArrayBufferView
-                  block $~lib/string/String
-                   block $~lib/arraybuffer/ArrayBuffer
-                    local.get $0
-                    i32.const 8
-                    i32.sub
-                    i32.load
-                    br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $assembly/modules/rendererEngine/RendererEngine $~lib/typedarray/Uint32Array $assembly/modules/point/Point $assembly/modules/vector/Vector $assembly/modules/sphere/Sphere $assembly/modules/material/Material $assembly/modules/color/Color $~lib/array/Array<assembly/modules/sphere/Sphere> $~lib/array/Array<i32> $assembly/modules/light/Light $~lib/array/Array<assembly/modules/light/Light> $assembly/modules/scene/Scene $assembly/modules/ray/Ray $assembly/modules/rendererEngine/NearestObject $invalid
-                   end
-                   return
+              block $~lib/typedarray/Uint32Array
+               block $assembly/modules/rendererEngine/RendererEngine
+                block $~lib/arraybuffer/ArrayBufferView
+                 block $~lib/string/String
+                  block $~lib/arraybuffer/ArrayBuffer
+                   local.get $0
+                   i32.const 8
+                   i32.sub
+                   i32.load
+                   br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $assembly/modules/rendererEngine/RendererEngine $~lib/typedarray/Uint32Array $assembly/modules/vector/Vector $assembly/modules/sphere/Sphere $assembly/modules/material/Material $assembly/modules/color/Color $~lib/array/Array<assembly/modules/sphere/Sphere> $~lib/array/Array<i32> $assembly/modules/light/Light $~lib/array/Array<assembly/modules/light/Light> $assembly/modules/scene/Scene $assembly/modules/ray/Ray $assembly/modules/rendererEngine/NearestObject $invalid
                   end
                   return
                  end
-                 local.get $0
-                 local.get $1
-                 call $~lib/arraybuffer/ArrayBufferView~visit
                  return
                 end
                 local.get $0
                 local.get $1
-                call $assembly/modules/rendererEngine/RendererEngine~visit
+                call $~lib/arraybuffer/ArrayBufferView~visit
                 return
                end
                local.get $0
                local.get $1
-               call $~lib/typedarray/Uint32Array~visit
+               call $assembly/modules/rendererEngine/RendererEngine~visit
                return
               end
+              local.get $0
+              local.get $1
+              call $~lib/typedarray/Uint32Array~visit
               return
              end
              return
@@ -2995,14 +3016,14 @@
    unreachable
   end
  )
- (func $assembly/modules/sphere/Sphere#intersects (param $0 i32) (param $1 i32) (result i32)
+ (func $assembly/modules/sphere/Sphere#intersects (param $0 i32) (param $1 i32) (result f64)
   (local $2 i32)
   (local $3 f64)
   (local $4 f64)
   (local $5 f64)
   (local $6 f64)
   (local $7 i32)
-  (local $8 i32)
+  (local $8 f64)
   global.get $~lib/memory/__stack_pointer
   i32.const 12
   i32.sub
@@ -3017,30 +3038,29 @@
   global.get $~lib/memory/__stack_pointer
   local.get $1
   i32.load
-  local.set $8
+  local.set $7
   global.get $~lib/memory/__stack_pointer
-  local.get $8
+  local.get $7
   i32.store
-  local.get $8
+  local.get $7
   local.get $0
   i32.load
-  local.set $8
+  local.set $7
   global.get $~lib/memory/__stack_pointer
-  local.get $8
+  local.get $7
   i32.store offset=4
-  local.get $8
+  local.get $7
   call $assembly/modules/vector/Vector#subtract
   local.tee $2
   i32.store offset=8
-  i32.const 2
-  f64.convert_i32_s
+  f64.const 2
   local.get $1
   i32.load offset=4
-  local.set $8
+  local.set $7
   global.get $~lib/memory/__stack_pointer
-  local.get $8
+  local.get $7
   i32.store
-  local.get $8
+  local.get $7
   local.get $2
   call $assembly/modules/vector/Vector#dotProduct
   f64.mul
@@ -3076,15 +3096,14 @@
    f64.sub
    f64.const 2
    f64.div
-   i32.trunc_sat_f64_s
-   local.set $7
-   local.get $7
-   i32.const 0
-   i32.gt_s
-   if (result i32)
-    local.get $7
+   local.set $6
+   local.get $6
+   f64.const 0
+   f64.gt
+   if (result f64)
+    local.get $6
    else
-    i32.const -1
+    f64.const -1
    end
    local.set $8
    global.get $~lib/memory/__stack_pointer
@@ -3094,7 +3113,7 @@
    local.get $8
    return
   end
-  i32.const -1
+  f64.const -1
   local.set $8
   global.get $~lib/memory/__stack_pointer
   i32.const 12
@@ -3103,12 +3122,12 @@
   local.get $8
  )
  (func $assembly/modules/rendererEngine/RendererEngine#findNearest (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
-  (local $3 i32)
+  (local $3 f64)
   (local $4 i32)
   (local $5 i32)
   (local $6 i32)
   (local $7 i32)
-  (local $8 i32)
+  (local $8 f64)
   (local $9 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 20
@@ -3119,7 +3138,7 @@
   i32.const 0
   i32.const 20
   memory.fill
-  i32.const -1
+  f64.const -1
   local.set $3
   global.get $~lib/memory/__stack_pointer
   i32.const 0
@@ -3127,7 +3146,7 @@
   f64.const 0
   f64.const 0
   f64.const 0
-  call $assembly/modules/point/Point#constructor
+  call $assembly/modules/vector/Vector#constructor
   local.set $9
   global.get $~lib/memory/__stack_pointer
   local.get $9
@@ -3190,12 +3209,19 @@
     call $assembly/modules/sphere/Sphere#intersects
     local.set $8
     local.get $8
-    i32.const -1
-    i32.ne
+    f64.const -1
+    f64.ne
     if (result i32)
      local.get $8
      local.get $3
-     i32.lt_s
+     f64.lt
+     if (result i32)
+      i32.const 1
+     else
+      local.get $3
+      f64.const -1
+      f64.eq
+     end
     else
      i32.const 0
     end
@@ -3258,7 +3284,7 @@
  (func $assembly/modules/rendererEngine/RendererEngine#rayTrace (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local $4 i32)
-  (local $5 i32)
+  (local $5 f64)
   (local $6 i32)
   (local $7 i32)
   (local $8 i32)
@@ -3288,16 +3314,16 @@
   local.tee $4
   i32.store offset=4
   local.get $4
-  i32.load
+  f64.load
   local.set $5
   global.get $~lib/memory/__stack_pointer
   local.get $4
-  i32.load offset=4
+  i32.load offset=8
   local.tee $6
   i32.store offset=8
-  local.get $6
-  i32.const 0
-  i32.eq
+  local.get $5
+  f64.const -1
+  f64.eq
   if
    local.get $3
    local.set $9
@@ -3324,7 +3350,6 @@
   i32.store offset=20
   local.get $9
   local.get $5
-  f64.convert_i32_s
   call $assembly/modules/vector/Vector#multiply
   local.set $9
   global.get $~lib/memory/__stack_pointer
@@ -3340,6 +3365,18 @@
   call $assembly/modules/sphere/Sphere#normal
   local.tee $8
   i32.store offset=28
+  local.get $3
+  i32.const 0
+  i32.const 255
+  i32.const 0
+  i32.const 0
+  call $assembly/modules/color/Color#constructor
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=16
+  local.get $9
+  call $assembly/modules/color/Color#add
   local.get $3
   local.set $9
   global.get $~lib/memory/__stack_pointer
@@ -3467,7 +3504,7 @@
       local.get $13
       f64.convert_i32_u
       f64.const 0
-      call $assembly/modules/point/Point#constructor
+      call $assembly/modules/vector/Vector#constructor
       local.set $22
       global.get $~lib/memory/__stack_pointer
       local.get $22
@@ -3495,6 +3532,8 @@
       i32.mul
       local.get $18
       i32.add
+      i32.const 65535
+      i32.and
       local.set $21
       local.get $0
       i32.load offset=4
@@ -3504,8 +3543,6 @@
       i32.store offset=20
       local.get $22
       local.get $21
-      i32.const 65535
-      i32.and
       local.get $15
       i32.load
       local.get $15
@@ -3581,12 +3618,12 @@
   f64.const 0
   f64.const 0
   f64.const -1
-  call $assembly/modules/point/Point#constructor
+  call $assembly/modules/vector/Vector#constructor
   global.set $assembly/index/camera
   global.get $~lib/memory/__stack_pointer
   i32.const 3
   i32.const 2
-  i32.const 10
+  i32.const 9
   i32.const 0
   call $~lib/rt/__newArray
   local.tee $0
@@ -3603,7 +3640,7 @@
   f64.const 0
   f64.const 0
   f64.const 0
-  call $assembly/modules/point/Point#constructor
+  call $assembly/modules/vector/Vector#constructor
   local.set $2
   global.get $~lib/memory/__stack_pointer
   local.get $2
@@ -3639,7 +3676,7 @@
   f64.const 0
   f64.const 0
   f64.const 0
-  call $assembly/modules/point/Point#constructor
+  call $assembly/modules/vector/Vector#constructor
   local.set $2
   global.get $~lib/memory/__stack_pointer
   local.get $2
@@ -3675,7 +3712,7 @@
   f64.const 0
   f64.const 0
   f64.const 0
-  call $assembly/modules/point/Point#constructor
+  call $assembly/modules/vector/Vector#constructor
   local.set $2
   global.get $~lib/memory/__stack_pointer
   local.get $2
@@ -3709,7 +3746,7 @@
   global.get $~lib/memory/__stack_pointer
   i32.const 1
   i32.const 2
-  i32.const 13
+  i32.const 12
   i32.const 0
   call $~lib/rt/__newArray
   local.tee $1
@@ -3726,7 +3763,7 @@
   f64.const 1.5
   f64.const -0.5
   f64.const -2
-  call $assembly/modules/point/Point#constructor
+  call $assembly/modules/vector/Vector#constructor
   local.set $2
   global.get $~lib/memory/__stack_pointer
   local.get $2
@@ -3993,65 +4030,29 @@
   if
    global.get $~lib/memory/__stack_pointer
    i32.const 24
-   i32.const 6
-   call $~lib/rt/itcms/__new
-   local.tee $0
-   i32.store
-  end
-  local.get $0
-  f64.const 0
-  call $assembly/modules/vector/Vector#set:x
-  local.get $0
-  f64.const 0
-  call $assembly/modules/vector/Vector#set:y
-  local.get $0
-  f64.const 0
-  call $assembly/modules/vector/Vector#set:z
-  local.get $0
-  local.get $1
-  call $assembly/modules/vector/Vector#set:x
-  local.get $0
-  local.get $2
-  call $assembly/modules/vector/Vector#set:y
-  local.get $0
-  local.get $3
-  call $assembly/modules/vector/Vector#set:z
-  local.get $0
-  local.set $4
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $4
- )
- (func $assembly/modules/point/Point#constructor (param $0 i32) (param $1 f64) (param $2 f64) (param $3 f64) (result i32)
-  (local $4 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store
-  local.get $0
-  i32.eqz
-  if
-   global.get $~lib/memory/__stack_pointer
-   i32.const 24
    i32.const 5
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
   end
-  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  f64.const 0
+  call $assembly/modules/vector/Vector#set:x
+  local.get $0
+  f64.const 0
+  call $assembly/modules/vector/Vector#set:y
+  local.get $0
+  f64.const 0
+  call $assembly/modules/vector/Vector#set:z
   local.get $0
   local.get $1
+  call $assembly/modules/vector/Vector#set:x
+  local.get $0
   local.get $2
+  call $assembly/modules/vector/Vector#set:y
+  local.get $0
   local.get $3
-  call $assembly/modules/vector/Vector#constructor
-  local.tee $0
-  i32.store
+  call $assembly/modules/vector/Vector#set:z
   local.get $0
   local.set $4
   global.get $~lib/memory/__stack_pointer
@@ -4075,7 +4076,7 @@
   if
    global.get $~lib/memory/__stack_pointer
    i32.const 20
-   i32.const 7
+   i32.const 6
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
@@ -4121,7 +4122,7 @@
   if
    global.get $~lib/memory/__stack_pointer
    i32.const 32
-   i32.const 8
+   i32.const 7
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
@@ -4173,7 +4174,7 @@
   if
    global.get $~lib/memory/__stack_pointer
    i32.const 12
-   i32.const 9
+   i32.const 8
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
@@ -4271,7 +4272,7 @@
   if
    global.get $~lib/memory/__stack_pointer
    i32.const 8
-   i32.const 12
+   i32.const 11
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
@@ -4311,7 +4312,7 @@
   if
    global.get $~lib/memory/__stack_pointer
    i32.const 12
-   i32.const 14
+   i32.const 13
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
@@ -4357,7 +4358,7 @@
   if
    global.get $~lib/memory/__stack_pointer
    i32.const 8
-   i32.const 15
+   i32.const 14
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
@@ -4439,7 +4440,7 @@
   global.set $~lib/memory/__stack_pointer
   local.get $3
  )
- (func $assembly/modules/rendererEngine/NearestObject#constructor (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $assembly/modules/rendererEngine/NearestObject#constructor (param $0 i32) (param $1 f64) (param $2 i32) (result i32)
   (local $3 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 4
@@ -4453,14 +4454,14 @@
   i32.eqz
   if
    global.get $~lib/memory/__stack_pointer
-   i32.const 8
-   i32.const 16
+   i32.const 12
+   i32.const 15
    call $~lib/rt/itcms/__new
    local.tee $0
    i32.store
   end
   local.get $0
-  i32.const 0
+  f64.const 0
   call $assembly/modules/rendererEngine/NearestObject#set:distanceHit
   local.get $0
   i32.const 0

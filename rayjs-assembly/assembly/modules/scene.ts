@@ -1,13 +1,13 @@
 import Light from "./light"
-import Point from "./point"
 import Sphere from "./sphere"
+import Vector from "./vector"
 
 export default class Scene {
-    camera: Point
+    camera: Vector
     objects: Sphere[]
     lights: Light[]
 
-    constructor(camera: Point, objects: Sphere[], lights: Light[]) {
+    constructor(camera: Vector, objects: Sphere[], lights: Light[]) {
         this.camera = camera
         this.objects = objects
         this.lights = lights
